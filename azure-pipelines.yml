@@ -1,0 +1,29 @@
+trigger:
+- main  # You can specify the branch to trigger the pipeline on.
+
+pr:
+- '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: CloneRepositories
+  steps:
+  - checkout: self
+    persistCredentials: true
+    clean: true
+    
+  - script: |
+      echo Cloning repository 1
+      git clone https://github.com/naveenmanne21/To-Do.git
+    displayName: 'Clone Repository 1'
+    workingDirectory: $(Agent.BuildDirectory)/To-Do  # Specify the directory where you want to clone the repository.
+
+  - script: |
+      # Clone Repository 2
+      git clone https://github.com/naveenmanne21/tic-tac-toe.git
+    displayName: 'Clone Repository 2'
+    workingDirectory: $(Agent.BuildDirectory)/tic-tac-toe  # Specify the directory where you want to clone the repository.
+
+  # Add more steps as needed for your specific pipeline.
